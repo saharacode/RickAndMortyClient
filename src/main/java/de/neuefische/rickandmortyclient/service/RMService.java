@@ -25,4 +25,16 @@ public class RMService {
                         .getBody(); // Gib mir den Körper der Antwort in welchem die Daten vorhanden sind
         return response.getResults();
     }
+
+    public List<RMCharacter> getAllAliveCharacters() {
+        RMCharacterCollection response =
+                Objects.requireNonNull(webClient.get()
+                                .uri("character/?status=alive") // Spezifizierung der Uri auf genaue Adresse
+                                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE) // JSON als Content festlegen
+                                .retrieve() // hole mir die Daten!
+                                .toEntity(RMCharacterCollection.class) // Mappe sie bitte auf folgende Klasse
+                                .block()) // Warte bis alles andere fertig ist
+                        .getBody(); // Gib mir den Körper der Antwort in welchem die Daten vorhanden sind
+        return response.getResults();
+    }
 }

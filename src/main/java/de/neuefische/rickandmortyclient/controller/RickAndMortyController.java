@@ -20,4 +20,9 @@ public class RickAndMortyController {
         return rmService.getAllCharacters();
     }
 
+    @GetMapping("/characters/alive")
+    public List<RMCharacter> getAllAliveCharacters(){
+        return rmService.getAllAliveCharacters();
+    }
+
 }
