@@ -2,6 +2,7 @@ package de.neuefische.rickandmortyclient.service;
 
 import de.neuefische.rickandmortyclient.model.RMCharacter;
 import de.neuefische.rickandmortyclient.model.RMCharacterCollection;
+import lombok.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,12 @@ import java.util.Objects;
 @Service
 public class RMService {
 
-    WebClient webClient = WebClient.create("https://rickandmortyapi.com/api/"); // initialize webclient with standard uri which will be called from every method
+    private final WebClient webClient; // = WebClient.create("https://rickandmortyapi.com/api/"); // initialize webclient with standard uri which will be called from every method
+
+    public RMService(@Value ("${rick-and-morty-api-url}") String rmApiUrl){
+        this.webClient = WebClient.create(rmApiUrl);
+    }
+
     public List<RMCharacter> getAllCharacters() {
         RMCharacterCollection response =
                 Objects.requireNonNull(webClient.get()
